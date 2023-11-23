@@ -8,9 +8,9 @@ import { dataFake } from '../../data/dataFake'
   styleUrls: ['./content.component.css']
 })
 export class ContentComponent {
-  photoCover:string="https://cdn.fs.teachablecdn.com/UWKQZYkSCahRe0KPwKD8"
-  contentTitle:string="Notícia exemplo do Revit"
-  contentDescription:string="Ta cheio de novidade galera, só chega vambora"
+  photoCover:string=""
+  contentTitle:string=""
+  contentDescription:string=""
   private id:string | null = "0"
 
   constructor(private route:ActivatedRoute
@@ -18,10 +18,16 @@ export class ContentComponent {
 
     ngOnInit(): void {
       this.route.paramMap.subscribe( value => this.id = value.get("Id"))
+
+      this.setValuesToComponent(this.id)
     }
 
-    setValuestoComponent(id:string) {
-        const result = dataFake.filter(article => article.id == id)
+    setValuesToComponent(id:string | null) {
+        const result = dataFake.filter(article => article.id == id)[0]
+
+        this.contentTitle = result.title
+        this.contentDescription = result.description
+        this.photoCover = result.photo
     }
 
 }
